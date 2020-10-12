@@ -28,6 +28,7 @@
     const timeLeft=document.querySelector('.display__time-left');
     const endTime=document.querySelector('.display__end-time');
     const buttons=document.querySelectorAll('.timer__button');
+    let interval;
     buttons.forEach(button => {
         button.addEventListener('click',timeButtons);});
     
@@ -39,9 +40,19 @@
         const now=Date.now();
         const end=now+seconds*1000;
         displayEnd(end);
-       
+        clearInterval(interval);
+        interval=setInterval(() => {
+            const left=Math.round((end-Date.now())/1000);
+            displayLeft(left);
+        }, 1000);
     }
     
+    function displayLeft(time){
+        const min=Math.floor(time/60);
+        const sec=time%60;
+        timeLeft.textContent=`${min}:${sec<10 ? '0' : ''}${sec}`;
+    }
+
     function displayEnd(time){
         const end=new Date(time);
         endTime.textContent=`Finishes at ${end.getHours()}:${end.getMinutes()<10 ? '0' : ''}${end.getMinutes()}`;
