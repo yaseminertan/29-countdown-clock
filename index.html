@@ -31,7 +31,12 @@
     let interval;
     buttons.forEach(button => {
         button.addEventListener('click',timeButtons);});
-    
+    document.customForm.addEventListener('submit',function (e){
+        e.preventDefault();
+        timer(this.minutes.value*60);
+        this.reset();
+    });
+
     function timeButtons(){
         timer(this.dataset.time);
     }
@@ -39,12 +44,13 @@
     function timer(seconds){
         const now=Date.now();
         const end=now+seconds*1000;
-        displayEnd(end);
+        displayLeft(Math.round((end-Date.now())/1000));
         clearInterval(interval);
         interval=setInterval(() => {
             const left=Math.round((end-Date.now())/1000);
             displayLeft(left);
         }, 1000);
+        displayEnd(end);
     }
     
     function displayLeft(time){
