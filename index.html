@@ -28,6 +28,13 @@
     const timeLeft=document.querySelector('.display__time-left');
     const endTime=document.querySelector('.display__end-time');
     const buttons=document.querySelectorAll('.timer__button');
+    buttons.forEach(button => {
+        button.addEventListener('click',timeButtons);});
+    
+    function timeButtons(){
+        timer(this.dataset.time);
+    }
+
     function timer(seconds){
         const now=Date.now();
         const end=now+seconds*1000;
@@ -39,7 +46,7 @@
         const end=new Date(time);
         endTime.textContent=`Finishes at ${end.getHours()}:${end.getMinutes()<10 ? '0' : ''}${end.getMinutes()}`;
     }
-    timer(3000);
+    //timer(3000);
 </script>
 <style>
 html {
